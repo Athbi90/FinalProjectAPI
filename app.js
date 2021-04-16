@@ -2,11 +2,18 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const passport = require("passport");
 const ip = require("ip");
 require("dotenv").config();
 
 // Initialize app
 const app = express();
+
+// Importing routes
+const userRoutes = require("./API/users/routes");
+
+// Passport Strategies
+const { localStrategy, jwtStrategy } = require("./middleware/passport");
 
 // Importing database
 const db = require("./db/models");
@@ -14,6 +21,15 @@ const db = require("./db/models");
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use("/media", express.static(path.join(__dirname, "media"))); // Media
+
+// Passport Setup
+app.use(passport.initialize());
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
+// Using routes
+app.use("/users", userRoutes);
 
 // Handling Errors
 app.use((err, req, res, next) => {
