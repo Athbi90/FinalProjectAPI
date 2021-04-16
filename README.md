@@ -10,7 +10,7 @@
 
 ### Note
 
-When you first clone this repo, add a `.env` file to the root directory.
+When you first clone this repo, add an `.env` file to the root directory.
 
 The variables include the following:
 
