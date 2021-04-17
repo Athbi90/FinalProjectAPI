@@ -13,16 +13,6 @@ const {
   userDelete,
 } = require("./controllers");
 
-// Sign up "register"
-router.post("/signup", signup);
-
-// Sign in "register"
-router.post(
-  "/signin",
-  passport.authenticate("local", { session: false }),
-  signin
-);
-
 // Param Middleware
 router.param("userId", async (req, res, next, userId) => {
   const user = await fetchUser(userId, next);
@@ -36,13 +26,30 @@ router.param("userId", async (req, res, next, userId) => {
   }
 });
 
+// Sign up "register"
+router.post("/signup", signup);
+
+// Sign in "register"
+router.post(
+  "/signin",
+  passport.authenticate("local", { session: false }),
+  signin
+);
 // user list
-router.get("/", userList);
+router.get("/", passport.authenticate("jwt", { session: false }), userList);
 
 // Deleting Users
-router.delete("/:userId", userDelete);
+router.delete(
+  "/:userId",
+  passport.authenticate("jwt", { session: false }),
+  userDelete
+);
 
 // Updating Users
-router.put("/:userId", userUpdate);
+router.put(
+  "/:userId",
+  passport.authenticate("jwt", { session: false }),
+  userUpdate
+);
 
 module.exports = router;

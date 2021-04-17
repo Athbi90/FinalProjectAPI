@@ -51,6 +51,7 @@ exports.signin = (req, res) => {
     gender: user.gender,
     exp: Date.now() + parseInt(JWT_EXPIRATION_MS),
   };
+  console.log(`Attempting login for ${req.user.username}`);
   const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
   res.json({ token: token });
 };
@@ -118,12 +119,20 @@ exports.userList = async (req, res, next) => {
 
 // Update user
 exports.userUpdate = async (req, res, next) => {
+  const { password } = req.body;
+  const saltRounds = 10;
   try {
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+      console.log("exports.update -> hashedPassword", hashedPassword);
+      req.body.password = hashedPassword;
+    }
     if (req.file) {
       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
     }
+
     await req.user.update(req.body);
-    res.status(204).end();
+    res.status(204).json("User infomation has been updated").end();
   } catch (err) {
     next(err);
   }
@@ -133,7 +142,7 @@ exports.userUpdate = async (req, res, next) => {
 exports.userDelete = async (req, res, next) => {
   try {
     await req.user.destroy();
-    res.status(204).end();
+    res.status(204).json("User has been deleted").end();
   } catch (err) {
     next(err);
   }

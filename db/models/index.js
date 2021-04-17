@@ -40,6 +40,8 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
+// models relations
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

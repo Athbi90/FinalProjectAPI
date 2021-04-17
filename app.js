@@ -11,6 +11,7 @@ const app = express();
 
 // Importing routes
 const userRoutes = require("./API/users/routes");
+const petRoutes = require("./API/pets/routes");
 
 // Passport Strategies
 const { localStrategy, jwtStrategy } = require("./middleware/passport");
@@ -30,6 +31,7 @@ passport.use(jwtStrategy);
 
 // Using routes
 app.use("/users", userRoutes);
+app.use("/pets", petRoutes);
 
 // Handling Errors
 app.use((err, req, res, next) => {
