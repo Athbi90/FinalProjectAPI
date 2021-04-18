@@ -2,7 +2,6 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const { fetchPet } = require("../pets/controllers");
 
 // Controllers
 const {
@@ -27,7 +26,7 @@ router.param("petOwnerId", async (req, res, next, petOwnerId) => {
 });
 
 // Create Pet Owner Profile
-router.post("/createPetOwnerProfile", createPetOwner);
+router.post("/createPetOwner", createPetOwner);
 // Update Pet Owner
 router.put("/:petOwnerId", updatePetOwner);
 // Delete Pet Owner

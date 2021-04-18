@@ -21,5 +21,3 @@ DB_PASSWORD=secret
 DB_NAME=sesh-db
 DB_HOST=127.0.0.1
 ```
-
-Testing
