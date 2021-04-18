@@ -6,10 +6,22 @@ module.exports = (sequelize, DataTypes) => {
     firstName: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        len: {
+          args: [2, 30],
+          msg: `The first name must contain between 2 to 30 characters`,
+        },
+      },
     },
     lastName: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        len: {
+          args: [2, 30],
+          msg: `The last name must contain between 2 to 30 characters`,
+        },
+      },
     },
     email: {
       type: DataTypes.STRING,
@@ -26,6 +38,12 @@ module.exports = (sequelize, DataTypes) => {
         args: true,
         msg: "Username already exists",
       },
+      validate: {
+        len: {
+          args: [2, 15],
+          msg: `The username must contain between 2 to 15 characters`,
+        },
+      },
     },
     password: {
       type: DataTypes.STRING,
@@ -38,6 +56,12 @@ module.exports = (sequelize, DataTypes) => {
     contactNumber: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        len: {
+          args: [3, 8],
+          msg: `The phone number must contain between 3 to 8 numbers`,
+        },
+      },
     },
     gender: {
       type: DataTypes.STRING,

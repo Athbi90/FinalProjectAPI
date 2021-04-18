@@ -6,6 +6,12 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        len: {
+          args: [2, 15],
+          msg: `The Pet name must contain between 2 to 15 characters`,
+        },
+      },
     },
     type: {
       type: DataTypes.STRING,
