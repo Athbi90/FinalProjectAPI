@@ -13,11 +13,7 @@ exports.fetchPet = async (petId, next) => {
 // Add Pet
 exports.addPet = async (req, res, next) => {
   try {
-    // const user = await User.findOne({
-    //   where: {
-    //     username: req.body.username,
-    //   },
-    // });
+    req.body.petOwnerId = req.petOwner.id;
     const newPet = await Pet.create(req.body);
     res.status(201).json({ message: "new Pet has been added" });
   } catch (err) {

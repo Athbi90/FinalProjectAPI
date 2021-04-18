@@ -26,11 +26,23 @@ router.param("petOwnerId", async (req, res, next, petOwnerId) => {
 });
 
 // Create Pet Owner Profile
-router.post("/createPetOwner", createPetOwner);
+router.post(
+  "/createPetOwner",
+  passport.authenticate("jwt", { session: false }),
+  createPetOwner
+);
 // Update Pet Owner
-router.put("/:petOwnerId", updatePetOwner);
+router.put(
+  "/:petOwnerId",
+  passport.authenticate("jwt", { session: false }),
+  updatePetOwner
+);
 // Delete Pet Owner
-router.delete("/:petOwnerId", deletePetOwner);
+router.delete(
+  "/:petOwnerId",
+  passport.authenticate("jwt", { session: false }),
+  deletePetOwner
+);
 // list Pet Owners
 router.get("/", listPetOwner);
 

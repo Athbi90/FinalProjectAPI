@@ -13,6 +13,10 @@ const {
   userDelete,
 } = require("./controllers");
 
+// Importing Routes
+const petOwnerRoutes = require("../../API/petOwners/routes");
+const petHostRoutes = require("../../API/petHosts/routes");
+
 // Param Middleware
 router.param("userId", async (req, res, next, userId) => {
   const user = await fetchUser(userId, next);
@@ -51,5 +55,12 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   userUpdate
 );
+
+//***Hiearchy */
+// Pet Owner Routes
+router.use("/:userId/petOwners", petOwnerRoutes);
+
+// Pet Host Routes
+router.use("/:userId/petHosts", petHostRoutes);
 
 module.exports = router;

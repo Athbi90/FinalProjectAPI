@@ -40,9 +40,46 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
-// models relations
-
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+//db.User.hasOne(db.Bakery, { as: "bakery", foreignKey: "userId" });
+//db.Bakery.belongsTo(db.User, { as: "user" });
+
+// models relations
+// User to PetOwner relation (1-1)
+db.User.hasOne(db.PetOwner, {
+  as: "petOwner",
+  foreignKey: {
+    name: "userId",
+  },
+});
+db.PetOwner.belongsTo(db.User, {
+  as: "user",
+});
+
+// User to PetHost relation (1-1)
+db.User.hasOne(db.PetHost, {
+  as: "petHost",
+  foreignKey: {
+    name: "userId",
+  },
+});
+db.PetHost.belongsTo(db.User, {
+  as: "user",
+});
+
+// PetOwner to Pets (1-M)
+db.PetOwner.hasMany(db.Pet, {
+  as: "petOwner",
+  foreignKey: {
+    name: "petOwnerId",
+  },
+});
+db.Pet.belongsTo(db.PetOwner, {
+  foreignKey: {
+    name: "petOwnerId",
+  },
+});
 
 module.exports = db;

@@ -13,6 +13,7 @@ exports.fetchPetHost = async (petHostID, next) => {
 // Create Pet Host Profile
 exports.createPetHost = async (req, res, next) => {
   try {
+    req.body.userId = req.user.id;
     const newPetHost = await PetHost.create(req.body);
     res.status(201).json(newPetHost);
   } catch (err) {
@@ -24,7 +25,8 @@ exports.createPetHost = async (req, res, next) => {
 exports.updatePetHost = async (req, res, next) => {
   try {
     await req.petHost.update(req.body);
-    res.status(204).json("Profile has been updated").end();
+    res.status(202).json("Profile has been updated");
+    res.json("Updated");
   } catch (err) {
     next(err);
   }
@@ -34,7 +36,8 @@ exports.updatePetHost = async (req, res, next) => {
 exports.deletePetHost = async (req, res, next) => {
   try {
     await req.petHost.destroy();
-    res.status(204).json("Profile has been deleted").end();
+    res.status(200).json("Profile has been deleted");
+    res.json("Deleted");
   } catch (err) {
     next(err);
   }

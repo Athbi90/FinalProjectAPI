@@ -13,6 +13,7 @@ exports.fetchPetOwner = async (petOwnerId, next) => {
 // Create Pet Owner Profile
 exports.createPetOwner = async (req, res, next) => {
   try {
+    req.body.userId = req.user.id;
     const newPetOwner = await PetOwner.create(req.body);
     res.status(201).json(newPetOwner);
   } catch (err) {

@@ -12,8 +12,6 @@ const app = express();
 // Importing routes
 const userRoutes = require("./API/users/routes");
 const petRoutes = require("./API/pets/routes");
-const petOwnerRoutes = require("./API/petOwners/routes");
-const petHostRoutes = require("./API/petHosts/routes");
 const bookingRoutes = require("./API/bookings/routes");
 const reviewRoutes = require("./API/reviews/routes");
 
@@ -36,8 +34,6 @@ passport.use(jwtStrategy);
 // Using routes
 app.use("/users", userRoutes);
 app.use("/pets", petRoutes);
-app.use("/petOwners", petOwnerRoutes);
-app.use("/petHosts", petHostRoutes);
 app.use("/bookings", bookingRoutes);
 app.use("/reviews", reviewRoutes);
 
@@ -62,7 +58,7 @@ const run = async () => {
     console.log("Server connected to database successfully.");
 
     app.listen(process.env.PORT, () => {
-      console.log("Express app started succeffully");
+      console.log("Express app started successffully");
       console.log(`Running on ${ip.address()}:${process.env.PORT}`);
     });
   } catch (error) {
