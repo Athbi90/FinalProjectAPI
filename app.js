@@ -11,7 +11,6 @@ const app = express();
 
 // Importing routes
 const userRoutes = require("./API/users/routes");
-const petRoutes = require("./API/pets/routes");
 const bookingRoutes = require("./API/bookings/routes");
 const reviewRoutes = require("./API/reviews/routes");
 
@@ -33,7 +32,6 @@ passport.use(jwtStrategy);
 
 // Using routes
 app.use("/users", userRoutes);
-app.use("/pets", petRoutes);
 app.use("/bookings", bookingRoutes);
 app.use("/reviews", reviewRoutes);
 

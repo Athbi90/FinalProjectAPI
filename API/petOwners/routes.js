@@ -12,6 +12,9 @@ const {
   fetchPetOwner,
 } = require("./controllers");
 
+// Importing Routes
+const petRoutes = require("../../API/pets/routes");
+
 // Param Middleware
 router.param("petOwnerId", async (req, res, next, petOwnerId) => {
   const petOwner = await fetchPetOwner(petOwnerId, next);
@@ -45,5 +48,10 @@ router.delete(
 );
 // list Pet Owners
 router.get("/", listPetOwner);
+
+// *** Hiearchy ***/
+
+// Pet Routes
+router.use("/:petOwnerId/pets", petRoutes);
 
 module.exports = router;

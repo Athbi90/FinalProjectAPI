@@ -1,4 +1,22 @@
+// Databases
 const { PetOwner, User, Pet } = require("../../db/models");
+
+// Include Convention
+const includeOptions = {
+  attributes: { exclude: ["createdAt", "updatedAt"] },
+  include: [
+    {
+      model: Pet,
+      as: "pet",
+      attributes: ["id", "name"],
+    },
+    // {
+    //   model: User,
+    //   as: "user",
+    //   attributes: ["id"],
+    // },
+  ],
+};
 
 // Fetch Pet Owner
 exports.fetchPetOwner = async (petOwnerId, next) => {
@@ -44,9 +62,7 @@ exports.deletePetOwner = async (req, res, next) => {
 // List Owner Profile
 exports.listPetOwner = async (req, res, next) => {
   try {
-    const petOwners = await PetOwner.findAll({
-      attributes: { exclude: ["createdAt", "updatedAt"] },
-    });
+    const petOwners = await PetOwner.findAll(includeOptions);
     res.json(petOwners);
   } catch (err) {
     next(err);

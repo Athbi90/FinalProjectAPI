@@ -43,10 +43,8 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-//db.User.hasOne(db.Bakery, { as: "bakery", foreignKey: "userId" });
-//db.Bakery.belongsTo(db.User, { as: "user" });
-
 // models relations
+
 // User to PetOwner relation (1-1)
 db.User.hasOne(db.PetOwner, {
   as: "petOwner",
@@ -77,6 +75,7 @@ db.PetOwner.hasMany(db.Pet, {
   },
 });
 db.Pet.belongsTo(db.PetOwner, {
+  as: "pet",
   foreignKey: {
     name: "petOwnerId",
   },

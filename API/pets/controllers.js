@@ -1,6 +1,7 @@
+// Database
 const { Pet, User } = require("../../db/models");
 
-//fetch Pet
+// Fetch Pet
 exports.fetchPet = async (petId, next) => {
   try {
     const pet = await Pet.findByPk(petId);
@@ -25,7 +26,7 @@ exports.addPet = async (req, res, next) => {
 exports.updatePet = async (req, res, next) => {
   try {
     await req.pet.update(req.body);
-    res.status(204).json("Pet infomation has been updated").end();
+    res.status(202).json("Pet infomation has been updated").end();
   } catch (err) {
     next(err);
   }
@@ -35,7 +36,7 @@ exports.updatePet = async (req, res, next) => {
 exports.deletePet = async (req, res, next) => {
   try {
     await req.pet.destroy();
-    res.status(204).json("Pet has been deleted").end();
+    res.status(200).json("Pet has been deleted").end();
   } catch (err) {
     next(err);
   }
