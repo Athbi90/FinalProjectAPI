@@ -24,7 +24,7 @@ exports.createPetHost = async (req, res, next) => {
 exports.updatePetHost = async (req, res, next) => {
   try {
     await req.petHost.update(req.body);
-    res.status(204).json("Profile has been update").end();
+    res.status(204).json("Profile has been updated").end();
   } catch (err) {
     next(err);
   }
@@ -34,7 +34,7 @@ exports.updatePetHost = async (req, res, next) => {
 exports.deletePetHost = async (req, res, next) => {
   try {
     await req.petHost.destroy();
-    res.status(204).json("Profile has been updated").end();
+    res.status(204).json("Profile has been deleted").end();
   } catch (err) {
     next(err);
   }
