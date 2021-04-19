@@ -13,7 +13,13 @@ exports.fetchReview = async (reviewId, next) => {
 // Create Review
 exports.createReview = async (req, res, next) => {
   try {
-    const newReview = await Review.create(req.body);
+    req.body.petOwnerId = req.petOwner.id;
+    req.body.petHostId = req.petHost.id;
+    const newReview = await Review.create({
+      ...req.body,
+      reviewerId: req.body.petOwnerId,
+      hostId: req.body.petHostId,
+    });
     res.status(201).json(newReview);
   } catch (err) {
     next(err);

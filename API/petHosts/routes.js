@@ -49,6 +49,7 @@ router.delete(
 );
 // Average Review
 router.get("/:petHostId/averageReviews", averageReview);
+
 // List Pet Hosts
 router.get("/", listPetHost);
 

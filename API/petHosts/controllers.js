@@ -56,8 +56,8 @@ exports.averageReview = async (req, res, next) => {
     const average = Math.round(total / count);
 
     res.json({ average });
-  } catch (error) {
-    next(error.message);
+  } catch (err) {
+    next(err.message);
   }
 };
 

@@ -31,8 +31,11 @@ exports.createBooking = async (req, res, next) => {
     });
     if (petHost && pet) {
       req.body.petOwnerId = req.petOwner.id;
-      const newBooking = await Booking.create(req.body);
-      newBooking.update({ petHostId: petHost.id, petId: pet.id });
+      const newBooking = await Booking.create({
+        ...req.body,
+        petHostId: petHost.id,
+        petId: pet.id,
+      });
       res.status(201).json(newBooking);
     }
   } catch (err) {

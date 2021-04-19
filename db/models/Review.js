@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         min: 1,
         max: 5,
-        msg: `Rating must be between 1 to 5 `,
+        // message: "Rating must be between 1 to 5 ",
       },
     },
   });
