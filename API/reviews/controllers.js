@@ -1,4 +1,4 @@
-const { Review } = require("../../db/models");
+const { Review, PetHost } = require("../../db/models");
 
 // fetch Review
 exports.fetchReview = async (reviewId, next) => {
@@ -53,6 +53,19 @@ exports.listReview = async (req, res, next) => {
       attributes: { exclude: ["createdAt", "updatedAt"] },
     });
     res.json(reviews);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// List Reviews for specific Host
+exports.hostReviews = async (req, res, next) => {
+  try {
+    const host = await PetHost.findByPk(req.params.petHostId);
+
+    const where = { where: { hostId: host.id } };
+    const hostReview = await Review.findAll(where);
+    res.json(hostReview);
   } catch (err) {
     next(err);
   }

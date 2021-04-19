@@ -10,6 +10,7 @@ const {
   updateReview,
   deleteReview,
   listReview,
+  hostReviews,
 } = require("./controllers");
 
 // PetHost Controllers
@@ -48,5 +49,7 @@ router.put("/:reviewId", updateReview);
 router.delete("/:reviewId", deleteReview);
 // List Reviews
 router.get("/", listReview);
+// List Host Reviews
+router.get("/:petHostId", hostReviews);
 
 module.exports = router;
