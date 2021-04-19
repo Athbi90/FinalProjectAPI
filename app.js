@@ -56,7 +56,7 @@ const run = async () => {
     console.log("Server connected to database successfully.");
 
     app.listen(process.env.PORT, () => {
-      console.log("Express app started successffully");
+      console.log("Express app started successfully");
       console.log(`Running on ${ip.address()}:${process.env.PORT}`);
     });
   } catch (error) {

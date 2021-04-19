@@ -1,4 +1,4 @@
-const { Booking } = require("../../db/models");
+const { Booking, User, PetOwner, PetHost } = require("../../db/models");
 
 //fetch Booking
 exports.fetchBooking = async (bookingId, next) => {
@@ -13,8 +13,22 @@ exports.fetchBooking = async (bookingId, next) => {
 //Create Booking
 exports.createBooking = async (req, res, next) => {
   try {
-    const newBooking = await Booking.create(req.body);
-    res.status(201).json(newBooking);
+    const user = await User.findOne({
+      where: {
+        username: req.body.host,
+      },
+    });
+    const petHost = await PetHost.findOne({
+      where: {
+        userId: user.id,
+      },
+    });
+    if (petHost) {
+      req.body.petOwnerId = req.petOwner.id;
+      const newBooking = await Booking.create(req.body);
+      newBooking.update({ petHostId: petHost.id });
+      res.status(201).json(newBooking);
+    }
   } catch (err) {
     next(err);
   }

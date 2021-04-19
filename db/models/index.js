@@ -81,4 +81,31 @@ db.Pet.belongsTo(db.PetOwner, {
   },
 });
 
+// Pet Owner to Booking (1-M)
+db.PetOwner.hasMany(db.Booking, {
+  as: "owner",
+  foreignKey: {
+    name: "petOwnerId",
+  },
+});
+db.Booking.belongsTo(db.PetOwner, {
+  as: "ownerBooking",
+  foreignKey: {
+    name: "petOwnerId",
+  },
+});
+
+// Pet Host to Booking (1-M)
+db.PetHost.hasMany(db.Booking, {
+  as: "host",
+  foreignKey: {
+    name: "petHostId",
+  },
+});
+db.Booking.belongsTo(db.PetHost, {
+  as: "hostBooking",
+  foreignKey: {
+    name: "petHostId",
+  },
+});
 module.exports = db;

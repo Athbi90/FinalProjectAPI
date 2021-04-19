@@ -14,6 +14,7 @@ const {
 
 // Importing Routes
 const petRoutes = require("../../API/pets/routes");
+const bookingRoutes = require("../../API/bookings/routes");
 
 // Param Middleware
 router.param("petOwnerId", async (req, res, next, petOwnerId) => {
@@ -53,5 +54,6 @@ router.get("/", listPetOwner);
 
 // Pet Routes
 router.use("/:petOwnerId/pets", petRoutes);
+router.use("/:petOwnerId/bookings", bookingRoutes);
 
 module.exports = router;
