@@ -35,4 +35,4 @@ Demos will happen on the start of Thursday, 29th April.
 
 ### Main idea
 
-Blah blah
+A pet app
