@@ -108,4 +108,18 @@ db.Booking.belongsTo(db.PetHost, {
     name: "petHostId",
   },
 });
+
+// Pet to Booking (1-1)
+db.Pet.hasOne(db.Booking, {
+  as: "booking",
+  foreignKey: {
+    name: "petId",
+  },
+});
+db.Booking.belongsTo(db.Pet, {
+  as: "pet",
+  foreignKey: {
+    name: "petId",
+  },
+});
 module.exports = db;

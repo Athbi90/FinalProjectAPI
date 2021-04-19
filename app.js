@@ -52,7 +52,7 @@ app.get("/", (req, res) => {
 // Start server
 const run = async () => {
   try {
-    await db.sequelize.sync({ force: false });
+    await db.sequelize.sync({ alter: false });
     console.log("Server connected to database successfully.");
 
     app.listen(process.env.PORT, () => {
