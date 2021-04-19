@@ -12,6 +12,9 @@ const {
   listPetHost,
 } = require("./controllers");
 
+// Import Routers
+const bookingRoutes = require("../../API/bookings/routes");
+
 // Param middleware
 router.param("petHostId", async (req, res, next, petHostId) => {
   const petHost = await fetchPetHost(petHostId, next);
@@ -45,5 +48,6 @@ router.delete(
 );
 // List Pet Hosts
 router.get("/", listPetHost);
+router.use("/:petOwnerId/bookings", bookingRoutes);
 
 module.exports = router;
