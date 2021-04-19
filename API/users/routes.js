@@ -59,9 +59,9 @@ router.put(
 // *** Hiearchy ***/
 
 // Pet Owner Routes
-router.use("/:userId/petOwners", petOwnerRoutes);
+router.use("/petOwners", petOwnerRoutes);
 
 // Pet Host Routes
-router.use("/:userId/petHosts", petHostRoutes);
+router.use("/petHosts", petHostRoutes);
 
 module.exports = router;
