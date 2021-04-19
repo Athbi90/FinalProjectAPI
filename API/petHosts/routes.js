@@ -10,6 +10,7 @@ const {
   updatePetHost,
   deletePetHost,
   listPetHost,
+  averageReview,
 } = require("./controllers");
 
 // Import Routers
@@ -46,8 +47,14 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   deletePetHost
 );
+// Average Review
+router.get("/:petHostId/averageReviews", averageReview);
 // List Pet Hosts
 router.get("/", listPetHost);
-router.use("/:petOwnerId/bookings", bookingRoutes);
+
+// *** Hiearchy ***/
+
+// Booking Routes
+router.use("/:petHostId/bookings", bookingRoutes);
 
 module.exports = router;

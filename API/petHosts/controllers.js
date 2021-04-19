@@ -1,5 +1,5 @@
 // Databases
-const { PetHost, User } = require("../../db/models");
+const { PetHost, User, Review } = require("../../db/models");
 
 // Fetch Pet Host
 exports.fetchPetHost = async (petHostID, next) => {
@@ -43,6 +43,24 @@ exports.deletePetHost = async (req, res, next) => {
     next(err);
   }
 };
+
+// Average Rating
+exports.averageReview = async (req, res, next) => {
+  try {
+    const host = await PetHost.findByPk(req.params.petHostId);
+
+    const where = { where: { hostId: host.id } };
+    const total = await Review.sum(`rating`, where);
+    const count = await Review.count(where);
+
+    const average = Math.round(total / count);
+
+    res.json({ average });
+  } catch (error) {
+    next(error.message);
+  }
+};
+
 // List Profile
 exports.listPetHost = async (req, res, next) => {
   try {
