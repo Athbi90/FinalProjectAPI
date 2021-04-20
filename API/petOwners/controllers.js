@@ -21,7 +21,7 @@ const includeOptions = {
 // Fetch Pet Owner
 exports.fetchPetOwner = async (petOwnerId, next) => {
   try {
-    const petOwner = await PetOwner.findByPk(petOwnerId);
+    const petOwner = await PetOwner.findByPk(petOwnerId, includeOptions);
     return petOwner;
   } catch (err) {
     next(err);
@@ -72,7 +72,7 @@ exports.deletePetOwner = async (req, res, next) => {
 // List Owner Profile
 exports.listPetOwner = async (req, res, next) => {
   try {
-    const petOwners = await PetOwner.findAll();
+    const petOwners = await PetOwner.findAll(includeOptions);
     res.json(petOwners);
   } catch (err) {
     next(err);
