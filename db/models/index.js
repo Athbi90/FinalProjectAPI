@@ -73,13 +73,13 @@ db.PetHost.belongsTo(db.User, {
 
 // PetOwner to Pets (1-M)
 db.PetOwner.hasMany(db.Pet, {
-  as: "petOwner",
+  as: "pet",
   foreignKey: {
     name: "petOwnerId",
   },
 });
 db.Pet.belongsTo(db.PetOwner, {
-  as: "pet",
+  as: "petOwner",
   foreignKey: {
     name: "petOwnerId",
   },
