@@ -35,6 +35,9 @@ app.use("/users", userRoutes);
 app.use("/bookings", bookingRoutes);
 app.use("/reviews", reviewRoutes);
 
+// Using Path Media
+app.use("/media", express.static(path.join(__dirname, "media")));
+
 // Handling Errors
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
@@ -59,6 +62,7 @@ const run = async () => {
       console.log("Express app started successfully");
       console.log(`Running on ${ip.address()}:${process.env.PORT}`);
     });
+    console.log("__dirname ", __dirname);
   } catch (error) {
     console.log("Failed to connect to database:", error);
   }
