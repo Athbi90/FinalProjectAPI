@@ -62,7 +62,6 @@ const run = async () => {
       console.log("Express app started successfully");
       console.log(`Running on ${ip.address()}:${process.env.PORT}`);
     });
-    console.log("__dirname ", __dirname);
   } catch (error) {
     console.log("Failed to connect to database:", error);
   }

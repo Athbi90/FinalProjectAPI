@@ -47,24 +47,13 @@ exports.updateReview = async (req, res, next) => {
         userId: req.user.id,
       },
     });
-    const host = await User.findOne({
-      where: {
-        username: req.body.host,
-      },
-    });
-    const hostReview = await PetHost.findOne({
-      where: {
-        userId: host.id,
-      },
-    });
 
     const review = await Review.findOne({
       where: {
         reviewerId: reviewer.id,
-        hostId: hostReview.id,
+        id: req.body.reviewId,
       },
     });
-    res.json(review);
     await review.update(req.body);
     res.status(204).end();
   } catch (err) {
@@ -75,8 +64,20 @@ exports.updateReview = async (req, res, next) => {
 // Delete Review
 exports.deleteReview = async (req, res, next) => {
   try {
-    await req.review.destroy();
-    res.status(204).json({ message: "Review has been deleted" });
+    const reviewer = await PetOwner.findOne({
+      where: {
+        userId: req.user.id,
+      },
+    });
+
+    const review = await Review.findOne({
+      where: {
+        reviewerId: reviewer.id,
+        id: req.body.reviewId,
+      },
+    });
+    await review.destroy();
+    res.status(204).end();
   } catch (err) {
     next(err);
   }
@@ -86,7 +87,7 @@ exports.deleteReview = async (req, res, next) => {
 exports.listReview = async (req, res, next) => {
   try {
     const reviews = await Review.findAll({
-      attributes: { exclude: ["createdAt", "updatedAt"] },
+      attributes: { exclude: ["createdAt", "updatedAt", "reviewerId", "id"] },
     });
     res.json(reviews);
   } catch (err) {
@@ -97,10 +98,16 @@ exports.listReview = async (req, res, next) => {
 // List Reviews for specific Host
 exports.hostReviews = async (req, res, next) => {
   try {
-    const host = await PetHost.findByPk(req.params.petHostId);
-
-    const where = { where: { hostId: host.id } };
-    const hostReview = await Review.findAll(where);
+    const hostUser = await User.findOne({
+      where: { username: req.body.hostName },
+    });
+    const host = await PetHost.findOne({ where: { userId: hostUser.id } });
+    const hostReview = await Review.findAll({
+      where: { hostId: host.id },
+      attributes: {
+        exclude: ["createdAt", "updatedAt", "reviewerId", "hostId", "id"],
+      },
+    });
     res.json(hostReview);
   } catch (err) {
     next(err);
