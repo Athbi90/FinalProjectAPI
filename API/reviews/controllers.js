@@ -1,4 +1,4 @@
-const { Review, PetHost } = require("../../db/models");
+const { Review, PetHost, PetOwner, User } = require("../../db/models");
 
 // fetch Review
 exports.fetchReview = async (reviewId, next) => {
@@ -13,12 +13,25 @@ exports.fetchReview = async (reviewId, next) => {
 // Create Review
 exports.createReview = async (req, res, next) => {
   try {
-    req.body.petOwnerId = req.petOwner.id;
-    req.body.petHostId = req.petHost.id;
+    const reviewer = await PetOwner.findOne({
+      where: {
+        userId: req.user.id,
+      },
+    });
+    const host = await User.findOne({
+      where: {
+        username: req.body.host,
+      },
+    });
+    const hostReview = await PetHost.findOne({
+      where: {
+        userId: host.id,
+      },
+    });
     const newReview = await Review.create({
       ...req.body,
-      reviewerId: req.body.petOwnerId,
-      hostId: req.body.petHostId,
+      reviewerId: reviewer.id,
+      hostId: hostReview.id,
     });
     res.status(201).json(newReview);
   } catch (err) {
@@ -29,8 +42,31 @@ exports.createReview = async (req, res, next) => {
 // Update Review
 exports.updateReview = async (req, res, next) => {
   try {
-    await req.review.update(req.body);
-    res.status(204).json({ message: "Review has been updated" });
+    const reviewer = await PetOwner.findOne({
+      where: {
+        userId: req.user.id,
+      },
+    });
+    const host = await User.findOne({
+      where: {
+        username: req.body.host,
+      },
+    });
+    const hostReview = await PetHost.findOne({
+      where: {
+        userId: host.id,
+      },
+    });
+
+    const review = await Review.findOne({
+      where: {
+        reviewerId: reviewer.id,
+        hostId: hostReview.id,
+      },
+    });
+    res.json(review);
+    await review.update(req.body);
+    res.status(204).end();
   } catch (err) {
     next(err);
   }

@@ -50,6 +50,8 @@ db.User.hasOne(db.PetOwner, {
   as: "petOwner",
   foreignKey: {
     name: "userId",
+    unique: true,
+    msg: "Already Have a Pet Owner Profile",
   },
 });
 db.PetOwner.belongsTo(db.User, {
@@ -61,6 +63,8 @@ db.User.hasOne(db.PetHost, {
   as: "petHost",
   foreignKey: {
     name: "userId",
+    unique: true,
+    msg: "Already Have a Pet Host Profile",
   },
 });
 db.PetHost.belongsTo(db.User, {
@@ -99,13 +103,13 @@ db.Booking.belongsTo(db.PetOwner, {
 db.PetHost.hasMany(db.Booking, {
   as: "host",
   foreignKey: {
-    name: "petHostId",
+    name: "hostId",
   },
 });
 db.Booking.belongsTo(db.PetHost, {
   as: "hostBooking",
   foreignKey: {
-    name: "petHostId",
+    name: "hostId",
   },
 });
 
@@ -114,6 +118,8 @@ db.Pet.hasOne(db.Booking, {
   as: "booking",
   foreignKey: {
     name: "petId",
+    unique: true,
+    msg: "Pets belong to one Booking at a time",
   },
 });
 db.Booking.belongsTo(db.Pet, {

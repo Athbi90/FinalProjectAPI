@@ -42,14 +42,22 @@ router.param("reviewId", async (req, res, next, reviewId) => {
 });
 
 // Create Review
-router.post("/:petHostId/createReview", createReview);
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  createReview
+);
 // Update Review
-router.put("/:reviewId", updateReview);
+router.put("/", passport.authenticate("jwt", { session: false }), updateReview);
 // Delete Review
-router.delete("/:reviewId", deleteReview);
+router.delete(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  deleteReview
+);
 // List Reviews
 router.get("/", listReview);
 // List Host Reviews
-router.get("/:petHostId", hostReviews);
+router.get("/hostReviews", hostReviews);
 
 module.exports = router;

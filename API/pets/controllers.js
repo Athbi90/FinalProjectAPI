@@ -1,5 +1,5 @@
 // Database
-const { Pet, User } = require("../../db/models");
+const { Pet, User, PetOwner } = require("../../db/models");
 
 // Fetch Pet
 exports.fetchPet = async (petId, next) => {
@@ -14,8 +14,12 @@ exports.fetchPet = async (petId, next) => {
 // Add Pet
 exports.addPet = async (req, res, next) => {
   try {
-    req.body.petOwnerId = req.petOwner.id;
-    const newPet = await Pet.create(req.body);
+    const owner = await PetOwner.findOne({
+      where: {
+        userId: req.user.id,
+      },
+    });
+    const newPet = await Pet.create({ ...req.body, petOwnerId: owner.id });
     res.status(201).json({ message: "new Pet has been added" });
   } catch (err) {
     next(err);
@@ -25,8 +29,20 @@ exports.addPet = async (req, res, next) => {
 // Update Pet
 exports.updatePet = async (req, res, next) => {
   try {
-    await req.pet.update(req.body);
-    res.status(202).json("Pet infomation has been updated").end();
+    const owner = await PetOwner.findOne({
+      where: {
+        userId: req.user.id,
+      },
+    });
+
+    const pet = await Pet.findOne({
+      where: {
+        name: req.body.petName,
+        petOwnerId: owner.id,
+      },
+    });
+    await pet.update(req.body);
+    res.status(204).end();
   } catch (err) {
     next(err);
   }
@@ -35,8 +51,21 @@ exports.updatePet = async (req, res, next) => {
 // Delete Pet
 exports.deletePet = async (req, res, next) => {
   try {
-    await req.pet.destroy();
-    res.status(200).json("Pet has been deleted").end();
+    const owner = await PetOwner.findOne({
+      where: {
+        userId: req.user.id,
+      },
+    });
+
+    const pet = await Pet.findOne({
+      where: {
+        name: req.body.petName,
+        petOwnerId: owner.id,
+      },
+    });
+
+    await pet.destroy();
+    res.status(204).end();
   } catch (err) {
     next(err);
   }

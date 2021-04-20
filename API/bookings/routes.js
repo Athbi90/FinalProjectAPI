@@ -27,19 +27,19 @@ router.param("bookingId", async (req, res, next, bookingId) => {
 
 // Create Booking
 router.post(
-  "/createBooking",
+  "/",
   passport.authenticate("jwt", { session: false }),
   createBooking
 );
 // Update Booking
 router.put(
-  "/:bookingId",
+  "/",
   passport.authenticate("jwt", { session: false }),
   updateBooking
 );
 // Delete Booking
 router.delete(
-  "/:bookingId",
+  "/",
   passport.authenticate("jwt", { session: false }),
   deleteBooking
 );

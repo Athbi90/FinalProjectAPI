@@ -44,17 +44,13 @@ router.get("/", passport.authenticate("jwt", { session: false }), userList);
 
 // Deleting Users
 router.delete(
-  "/:userId",
+  "/",
   passport.authenticate("jwt", { session: false }),
   userDelete
 );
 
 // Updating Users
-router.put(
-  "/:userId",
-  passport.authenticate("jwt", { session: false }),
-  userUpdate
-);
+router.put("/", passport.authenticate("jwt", { session: false }), userUpdate);
 
 // *** Hiearchy ***/
 

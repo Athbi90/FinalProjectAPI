@@ -31,24 +31,24 @@ router.param("petHostId", async (req, res, next, petHostId) => {
 
 // Create Pet Host Profile
 router.post(
-  "/createPetHost",
+  "/",
   passport.authenticate("jwt", { session: false }),
   createPetHost
 );
 // Update Pet Host Profile
 router.put(
-  "/:petHostId",
+  "/",
   passport.authenticate("jwt", { session: false }),
   updatePetHost
 );
 // Delete Pet Host Profile
 router.delete(
-  "/:petHostId",
+  "/",
   passport.authenticate("jwt", { session: false }),
   deletePetHost
 );
 // Average Review
-router.get("/:petHostId/averageReviews", averageReview);
+router.get("/averageReviews", averageReview);
 
 // List Pet Hosts
 router.get("/", listPetHost);
@@ -56,6 +56,6 @@ router.get("/", listPetHost);
 // *** Hiearchy ***/
 
 // Booking Routes
-router.use("/:petHostId/bookings", bookingRoutes);
+router.use("/bookings", bookingRoutes);
 
 module.exports = router;

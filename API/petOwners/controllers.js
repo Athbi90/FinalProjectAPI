@@ -42,8 +42,13 @@ exports.createPetOwner = async (req, res, next) => {
 // Update Profile
 exports.updatePetOwner = async (req, res, next) => {
   try {
-    await req.petOwner.update(req.body);
-    res.status(204).json("Profile has been updated").end();
+    const petOwner = PetOwner.findOne({
+      where: {
+        userId: req.user.id,
+      },
+    });
+    await petOwner.update(req.body);
+    res.status(204).end();
   } catch (err) {
     next(err);
   }
@@ -52,8 +57,13 @@ exports.updatePetOwner = async (req, res, next) => {
 // Delete Profile
 exports.deletePetOwner = async (req, res, next) => {
   try {
-    await req.petOwner.destroy();
-    res.status(204).json("Profile has been deleted").end();
+    const petOwner = PetOwner.findOne({
+      where: {
+        userId: req.user.id,
+      },
+    });
+    await petOwner.destroy();
+    res.status(204).end();
   } catch (err) {
     next(err);
   }

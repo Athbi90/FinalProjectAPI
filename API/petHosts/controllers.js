@@ -27,12 +27,11 @@ exports.updatePetHost = async (req, res, next) => {
   try {
     const host = PetHost.findOne({
       where: {
-        userId: req.user.id
-      }
-    })
+        userId: req.user.id,
+      },
+    });
     await host.update(req.body);
-    res.status(204);
-    
+    res.status(204).end();
   } catch (err) {
     next(err);
   }
@@ -41,13 +40,14 @@ exports.updatePetHost = async (req, res, next) => {
 // Delete Profile
 exports.deletePetHost = async (req, res, next) => {
   try {
-    const host = PetHost.findOne({
+    const host = await PetHost.findOne({
       where: {
-        userId: req.user.id
-      }
-    })
+        userId: req.user.id,
+      },
+    });
+    console.log(host);
     await host.destroy();
-    res.status(204);
+    res.status(204).end();
   } catch (err) {
     next(err);
   }

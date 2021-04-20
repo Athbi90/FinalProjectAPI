@@ -32,19 +32,19 @@ router.param("petOwnerId", async (req, res, next, petOwnerId) => {
 
 // Create Pet Owner Profile
 router.post(
-  "/createPetOwner",
+  "/",
   passport.authenticate("jwt", { session: false }),
   createPetOwner
 );
 // Update Pet Owner
 router.put(
-  "/:petOwnerId",
+  "/",
   passport.authenticate("jwt", { session: false }),
   updatePetOwner
 );
 // Delete Pet Owner
 router.delete(
-  "/:petOwnerId",
+  "/",
   passport.authenticate("jwt", { session: false }),
   deletePetOwner
 );
@@ -54,8 +54,8 @@ router.get("/", listPetOwner);
 // *** Hiearchy ***/
 
 // Pet Routes
-router.use("/:petOwnerId/pets", petRoutes);
-router.use("/:petOwnerId/bookings", bookingRoutes);
-router.use("/:petOwnerId/reviews", reviewRoutes);
+router.use("/pets", petRoutes);
+router.use("/bookings", bookingRoutes);
+router.use("/reviews", reviewRoutes);
 
 module.exports = router;

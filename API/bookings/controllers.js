@@ -14,7 +14,12 @@ exports.fetchBooking = async (bookingId, next) => {
 //Create Booking
 exports.createBooking = async (req, res, next) => {
   try {
-    const user = await User.findOne({
+    const owner = await PetOwner.findOne({
+      where: {
+        userId: req.user.id,
+      },
+    });
+    const host = await User.findOne({
       where: {
         username: req.body.host,
       },
@@ -24,17 +29,17 @@ exports.createBooking = async (req, res, next) => {
         name: req.body.petName,
       },
     });
-    const petHost = await PetHost.findOne({
+    const bookHost = await PetHost.findOne({
       where: {
-        userId: user.id,
+        userId: host.id,
       },
     });
-    if (petHost && pet) {
-      req.body.petOwnerId = req.petOwner.id;
+    if (bookHost && pet) {
       const newBooking = await Booking.create({
         ...req.body,
-        petHostId: petHost.id,
+        hostId: bookHost.id,
         petId: pet.id,
+        petOwnerId: owner.id,
       });
       res.status(201).json(newBooking);
     }
@@ -46,8 +51,23 @@ exports.createBooking = async (req, res, next) => {
 //Update Booking
 exports.updateBooking = async (req, res, next) => {
   try {
-    await req.booking.update(req.body);
-    res.status(204).json("Booking has been updated");
+    const owner = await PetOwner.findOne({
+      where: {
+        userId: req.user.id,
+      },
+    });
+    const pet = await Pet.findOne({
+      where: {
+        name: req.body.petName,
+        petOwnerId: owner.id,
+      },
+    });
+
+    const booking = await Booking.findOne({
+      where: { petId: pet.id },
+    });
+    await booking.update(req.body);
+    res.status(204).end();
   } catch (err) {
     next(err);
   }
@@ -56,8 +76,22 @@ exports.updateBooking = async (req, res, next) => {
 //Delete Booking
 exports.deleteBooking = async (req, res, next) => {
   try {
-    await req.booking.destroy();
-    res.status(204).json("Booking has been deleted");
+    const owner = await PetOwner.findOne({
+      where: {
+        userId: req.user.id,
+      },
+    });
+    const pet = await Pet.findOne({
+      where: {
+        name: req.body.petName,
+        petOwnerId: owner.id,
+      },
+    });
+    const booking = await Booking.findOne({
+      where: { petId: pet.id },
+    });
+    await booking.destroy();
+    res.status(204).end();
   } catch (err) {
     next(err);
   }

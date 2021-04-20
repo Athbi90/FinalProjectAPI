@@ -25,23 +25,11 @@ router.param("petId", async (req, res, next, petId) => {
   }
 });
 // Add Pet
-router.post(
-  "/addPet",
-  passport.authenticate("jwt", { session: false }),
-  addPet
-);
+router.post("/", passport.authenticate("jwt", { session: false }), addPet);
 // Update Pet
-router.put(
-  "/:petId",
-  passport.authenticate("jwt", { session: false }),
-  updatePet
-);
+router.put("/", passport.authenticate("jwt", { session: false }), updatePet);
 // Delete Pet
-router.delete(
-  "/:petId",
-  passport.authenticate("jwt", { session: false }),
-  deletePet
-);
+router.delete("/", passport.authenticate("jwt", { session: false }), deletePet);
 // List Pet
 router.get("/", listPet);
 
