@@ -6,6 +6,10 @@ const passport = require("passport");
 const ip = require("ip");
 require("dotenv").config();
 
+// Socket.io stuff
+// const httpServer = require("http").createServer(app);
+// const io = require("socket.io")(httpServer, options);
+
 // Initialize app
 const app = express();
 
@@ -34,6 +38,9 @@ passport.use(jwtStrategy);
 app.use("/users", userRoutes);
 app.use("/bookings", bookingRoutes);
 app.use("/reviews", reviewRoutes);
+
+// Socket.io connection
+// io.on("connection", socket => { /* ... */ });
 
 // Using Path Media
 app.use("/media", express.static(path.join(__dirname, "media")));
