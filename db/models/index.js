@@ -87,13 +87,13 @@ db.Pet.belongsTo(db.PetOwner, {
 
 // Pet Owner to Booking (1-M)
 db.PetOwner.hasMany(db.Booking, {
-  as: "owner",
+  as: "ownerBooking",
   foreignKey: {
     name: "petOwnerId",
   },
 });
 db.Booking.belongsTo(db.PetOwner, {
-  as: "ownerBooking",
+  as: "owner",
   foreignKey: {
     name: "petOwnerId",
   },
@@ -101,13 +101,13 @@ db.Booking.belongsTo(db.PetOwner, {
 
 // Pet Host to Booking (1-M)
 db.PetHost.hasMany(db.Booking, {
-  as: "host",
+  as: "hostBooking",
   foreignKey: {
     name: "hostId",
   },
 });
 db.Booking.belongsTo(db.PetHost, {
-  as: "hostBooking",
+  as: "host",
   foreignKey: {
     name: "hostId",
   },
@@ -131,13 +131,13 @@ db.Booking.belongsTo(db.Pet, {
 
 // Pet Owner to Review (1-M)
 db.PetOwner.hasMany(db.Review, {
-  as: "reviewer",
+  as: "ownerReview",
   foreignKey: {
     name: "reviewerId",
   },
 });
 db.Review.belongsTo(db.PetOwner, {
-  as: "OwnerReview",
+  as: "reviewer",
   foreignKey: {
     name: "reviewerId",
   },
