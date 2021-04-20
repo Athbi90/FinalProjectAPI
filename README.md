@@ -35,4 +35,4 @@ Demos will happen on the start of Thursday, 29th April.
 
 ### Main idea
 
-A pet app
+A pet app that may or may not be too ambitious!
