@@ -37,7 +37,7 @@ exports.updatePet = async (req, res, next) => {
 
     const pet = await Pet.findOne({
       where: {
-        name: req.body.petName,
+        name: req.body.oldPet,
         petOwnerId: owner.id,
       },
     });
@@ -63,7 +63,6 @@ exports.deletePet = async (req, res, next) => {
         petOwnerId: owner.id,
       },
     });
-
     await pet.destroy();
     res.status(204).end();
   } catch (err) {

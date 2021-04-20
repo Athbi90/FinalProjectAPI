@@ -42,7 +42,7 @@ exports.createPetOwner = async (req, res, next) => {
 // Update Profile
 exports.updatePetOwner = async (req, res, next) => {
   try {
-    const petOwner = PetOwner.findOne({
+    const petOwner = await PetOwner.findOne({
       where: {
         userId: req.user.id,
       },
@@ -57,7 +57,7 @@ exports.updatePetOwner = async (req, res, next) => {
 // Delete Profile
 exports.deletePetOwner = async (req, res, next) => {
   try {
-    const petOwner = PetOwner.findOne({
+    const petOwner = await PetOwner.findOne({
       where: {
         userId: req.user.id,
       },
@@ -72,7 +72,7 @@ exports.deletePetOwner = async (req, res, next) => {
 // List Owner Profile
 exports.listPetOwner = async (req, res, next) => {
   try {
-    const petOwners = await PetOwner.findAll(includeOptions);
+    const petOwners = await PetOwner.findAll();
     res.json(petOwners);
   } catch (err) {
     next(err);

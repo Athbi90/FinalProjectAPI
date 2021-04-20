@@ -25,7 +25,7 @@ exports.createPetHost = async (req, res, next) => {
 // Update Profile
 exports.updatePetHost = async (req, res, next) => {
   try {
-    const host = PetHost.findOne({
+    const host = await PetHost.findOne({
       where: {
         userId: req.user.id,
       },
@@ -45,7 +45,6 @@ exports.deletePetHost = async (req, res, next) => {
         userId: req.user.id,
       },
     });
-    console.log(host);
     await host.destroy();
     res.status(204).end();
   } catch (err) {
@@ -56,7 +55,7 @@ exports.deletePetHost = async (req, res, next) => {
 // Average Rating
 exports.averageReview = async (req, res, next) => {
   try {
-    const host = await PetHost.findByPk(req.params.petHostId);
+    const host = await PetHost.findByPk(req.body.petHostId);
 
     const where = { where: { hostId: host.id } };
     const total = await Review.sum(`rating`, where);
