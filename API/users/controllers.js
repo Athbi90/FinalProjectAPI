@@ -105,7 +105,6 @@ exports.fetchUser = async (userId, next) => {
 exports.userList = async (req, res, next) => {
   try {
     const users = await User.findAll({
-      where: { id: req.user.id },
       attributes: { exclude: ["createdAt", "updatedAt", "password"] },
       include: [
         {
