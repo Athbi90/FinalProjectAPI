@@ -39,19 +39,23 @@ exports.signup = async (req, res, next) => {
 };
 
 // Sign in
-exports.signin = (req, res) => {
+exports.signin = async (req, res) => {
   console.log(`Attempting login for ${req.user.username}`);
   const { user } = req;
+  const owner = await PetOwner.findOne({ where: { userId: user.id } });
+  const host = await PetHost.findOne({ where: { userId: user.id } });
   const payload = {
     id: user.id,
     username: user.username,
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
+    gender: user.gender,
     dateOfBirth: user.dateOfBirth,
     contactNumber: user.contactNumber,
-    gender: user.gender,
     exp: Date.now() + parseInt(JWT_EXPIRATION_MS),
+    petOwner: owner ? owner.id : "No Owner Profile",
+    petHost: host ? host.id : "No Host Profile",
   };
   console.log(`Attempting login for ${req.user.username}`);
   const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
@@ -72,26 +76,31 @@ exports.checkUsername = async (req, res, next) => {
 };
 
 // *** Commands ***
+// Check
 
 // Fetch users
-exports.fetchUser = async (userId, next) => {
+exports.fetchUser = async (req, res, next) => {
   try {
-    const user = await User.findByPk(userId, {
-      attributes: { exclude: ["createdAt", "updatedAt"] },
-      // include: [
-      //   {
-      //     model: PetOwner,
-      //     as: "petOwner",
-      //     attributes: ["id"],
-      //   },
-      //   {
-      //     model: PetHost,
-      //     as: "petHost",
-      //     attributes: ["id"],
-      //   },
-      // ],
-    });
-    return user;
+    const fetched = await User.findOne(
+      { where: { id: req.user.id } },
+      {
+        attributes: { exclude: ["createdAt", "updatedAt"] },
+        include: [
+          {
+            model: PetOwner,
+            as: "petOwner",
+            attributes: ["id"],
+          },
+          {
+            model: PetHost,
+            as: "petHost",
+            attributes: ["id"],
+          },
+        ],
+      }
+    );
+    res.json(fetched);
+    return fetched;
   } catch (error) {
     next(error);
   }
@@ -101,6 +110,7 @@ exports.fetchUser = async (userId, next) => {
 exports.userList = async (req, res, next) => {
   try {
     const users = await User.findAll({
+      where: { id: req.user.id },
       attributes: { exclude: ["createdAt", "updatedAt", "password"] },
       include: [
         {

@@ -42,6 +42,13 @@ router.post(
 // user list
 router.get("/", passport.authenticate("jwt", { session: false }), userList);
 
+// user details
+router.get(
+  "/user",
+  passport.authenticate("jwt", { session: false }),
+  fetchUser
+);
+
 // Deleting Users
 router.delete(
   "/",
