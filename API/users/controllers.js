@@ -54,8 +54,8 @@ exports.signin = async (req, res) => {
     dateOfBirth: user.dateOfBirth,
     contactNumber: user.contactNumber,
     exp: Date.now() + parseInt(JWT_EXPIRATION_MS),
-    petOwner: owner ? owner.id : "No Owner Profile",
-    petHost: host ? host.id : "No Host Profile",
+    petOwnerId: owner ? owner.id : null,
+    petHostId: host ? host.id : null,
   };
   console.log(`Attempting login for ${req.user.username}`);
   const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
@@ -79,28 +79,23 @@ exports.checkUsername = async (req, res, next) => {
 // Check
 
 // Fetch users
-exports.fetchUser = async (req, res, next) => {
+exports.fetchUser = async (userId, next) => {
   try {
-    const fetched = await User.findOne(
-      { where: { id: req.user.id } },
-      {
-        attributes: { exclude: ["createdAt", "updatedAt"] },
-        include: [
-          {
-            model: PetOwner,
-            as: "petOwner",
-            attributes: ["id"],
-          },
-          {
-            model: PetHost,
-            as: "petHost",
-            attributes: ["id"],
-          },
-        ],
-      }
-    );
-    res.json(fetched);
-    return fetched;
+    const user = await User.findByPk(userId, {
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+      // include: {
+      //   model: Room,
+      //   as: "room",
+      //   attributes: {
+      //     include: ["id", "name"],
+      //     exclude: ["createdAt", "updatedAt"],
+      //     through: {
+      //       attributes: [],
+      //     },
+      //   },
+      // },
+    });
+    return user;
   } catch (error) {
     next(error);
   }
