@@ -25,6 +25,9 @@ exports.createPetHost = async (req, res, next) => {
 // Update Profile
 exports.updatePetHost = async (req, res, next) => {
   try {
+    if (req.files) {
+      req.body.image = `http://${req.get("host")}/media/${req.files.filesname}`;
+    }
     const host = await PetHost.findOne({
       where: {
         userId: req.user.id,

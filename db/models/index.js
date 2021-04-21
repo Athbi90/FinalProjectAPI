@@ -156,4 +156,18 @@ db.Review.belongsTo(db.PetHost, {
     name: "hostId",
   },
 });
+
+// Pet Host to HostImage (1-M)
+db.PetHost.hasMany(db.HostImage, {
+  as: "hostimage",
+  foreignKey: {
+    name: "hostId",
+  },
+});
+db.HostImage.belongsTo(db.PetHost, {
+  as: "hostimage",
+  foreignKey: {
+    name: "hostId",
+  },
+});
 module.exports = db;

@@ -3,6 +3,9 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
+// importing
+const upload = require("../../middleware/multer");
+
 // Controllers
 const {
   createPetHost,
@@ -39,6 +42,7 @@ router.post(
 router.put(
   "/",
   passport.authenticate("jwt", { session: false }),
+  upload.array("image"),
   updatePetHost
 );
 // Delete Pet Host Profile
