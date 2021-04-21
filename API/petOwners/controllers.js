@@ -8,7 +8,7 @@ const includeOptions = {
     {
       model: Pet,
       as: "pet",
-      attributes: ["id", "name"],
+      attributes: ["id"],
     },
     // {
     //   model: User,

@@ -8,6 +8,8 @@ const { JWT_SECRET, JWT_EXPIRATION_MS } = require("../../config/keys");
 
 // Database
 const { User } = require("../../db/models");
+const { PetOwner } = require("../../db/models");
+const { PetHost } = require("../../db/models");
 
 // Sign up
 exports.signup = async (req, res, next) => {
@@ -76,17 +78,18 @@ exports.fetchUser = async (userId, next) => {
   try {
     const user = await User.findByPk(userId, {
       attributes: { exclude: ["createdAt", "updatedAt"] },
-      // include: {
-      //   model: Room,
-      //   as: "room",
-      //   attributes: {
-      //     include: ["id", "name"],
-      //     exclude: ["createdAt", "updatedAt"],
-      //     through: {
-      //       attributes: [],
-      //     },
+      // include: [
+      //   {
+      //     model: PetOwner,
+      //     as: "petOwner",
+      //     attributes: ["id"],
       //   },
-      // },
+      //   {
+      //     model: PetHost,
+      //     as: "petHost",
+      //     attributes: ["id"],
+      //   },
+      // ],
     });
     return user;
   } catch (error) {
@@ -99,17 +102,18 @@ exports.userList = async (req, res, next) => {
   try {
     const users = await User.findAll({
       attributes: { exclude: ["createdAt", "updatedAt", "password"] },
-      // include: {
-      //   model: Room,
-      //   as: "room",
-      //   attributes: {
-      //     include: ["id", "name"],
-      //     exclude: ["createdAt", "updatedAt"],
-      //     through: {
-      //       attributes: [],
-      //     },
-      //   },
-      // },
+      include: [
+        {
+          model: PetOwner,
+          as: "petOwner",
+          attributes: ["id"],
+        },
+        {
+          model: PetHost,
+          as: "petHost",
+          attributes: ["id"],
+        },
+      ],
     });
     res.json(users);
   } catch (err) {
