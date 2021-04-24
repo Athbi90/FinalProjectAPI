@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     dateOfBirth: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
     },
     vaccinated: {
       type: DataTypes.BOOLEAN,
@@ -36,6 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     image: {
       type: DataTypes.STRING,
+      defaultValue: "/media/petProfile.jpeg",
     },
     walkingHours: {
       type: DataTypes.STRING,

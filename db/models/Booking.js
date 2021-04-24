@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Booking = sequelize.define("Booking", {
     dateFrom: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
     dateTo: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
     bookingStatus: {
