@@ -7,9 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     image: {
       type: DataTypes.STRING,
-      defaultValue: `${ip.address()}:${
-        process.env.PORT
-      }/media/profileImage.jpeg`,
+      defaultValue: "/media/petOwner.png",
     },
   });
   return PetOwner;
