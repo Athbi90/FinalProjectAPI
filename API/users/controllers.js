@@ -7,9 +7,7 @@ const jwt = require("jsonwebtoken");
 const { JWT_SECRET, JWT_EXPIRATION_MS } = require("../../config/keys");
 
 // Database
-const { User } = require("../../db/models");
-const { PetOwner } = require("../../db/models");
-const { PetHost } = require("../../db/models");
+const { User, PetOwner, PetHost } = require("../../db/models");
 
 // Sign up
 exports.signup = async (req, res, next) => {

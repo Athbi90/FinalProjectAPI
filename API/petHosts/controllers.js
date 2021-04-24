@@ -1,5 +1,5 @@
 // Databases
-const { PetHost, User, Review } = require("../../db/models");
+const { PetHost, User, Review, HostImage } = require("../../db/models");
 
 // Fetch Pet Host
 exports.fetchPetHost = async (petHostID, next) => {
@@ -25,8 +25,8 @@ exports.createPetHost = async (req, res, next) => {
 // Update Profile
 exports.updatePetHost = async (req, res, next) => {
   try {
-    if (req.files) {
-      req.body.image = `http://${req.get("host")}/media/${req.files.filesname}`;
+    if (req.file) {
+      req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
     }
     const host = await PetHost.findOne({
       where: {
@@ -79,6 +79,26 @@ exports.listPetHost = async (req, res, next) => {
       attributes: { exclude: ["createdAt", "updatedAt"] },
     });
     res.json(petHosts);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Create host location images
+exports.addLocationImage = async (req, res, next) => {
+  try {
+    if (req.files) {
+      console.log(req.files[filename]);
+      req.body.image = `http://${req.get("host")}/media/${req.files.filename}`;
+    }
+    const host = await PetHost.findOne({
+      where: {
+        userId: req.user.id,
+      },
+    });
+    const hostimage = await HostImage.create({ ...req.body, hostId: host.id });
+    console.log(hostimage);
+    res.status(201).json({ message: "Host location images have been added" });
   } catch (err) {
     next(err);
   }

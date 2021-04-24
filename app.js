@@ -42,9 +42,6 @@ app.use("/reviews", reviewRoutes);
 // Socket.io connection
 // io.on("connection", socket => { /* ... */ });
 
-// Using Path Media
-app.use("/media", express.static(path.join(__dirname, "media")));
-
 // Handling Errors
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
