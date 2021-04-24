@@ -51,18 +51,23 @@ exports.createBooking = async (req, res, next) => {
 //Update Booking
 exports.updateBooking = async (req, res, next) => {
   try {
-    const owner = await PetOwner.findOne({
+    const owner = await User.findOne({
       where: {
-        userId: req.user.id,
+        username: req.body.ownerUser,
       },
     });
-    const pet = await Pet.findOne({
+    const petOwner = await PetOwner.findOne({
       where: {
-        name: req.body.petName,
-        petOwnerId: owner.id,
+        userId: owner.id,
       },
     });
 
+    const pet = await Pet.findOne({
+      where: {
+        name: req.body.petName,
+        petOwnerId: petOwner.id,
+      },
+    });
     const booking = await Booking.findOne({
       where: { petId: pet.id },
     });
