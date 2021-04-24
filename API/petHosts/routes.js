@@ -14,6 +14,7 @@ const {
   deletePetHost,
   listPetHost,
   averageReview,
+  addLocationImage,
 } = require("./controllers");
 
 // Import Routers
@@ -42,13 +43,14 @@ router.post(
 router.put(
   "/",
   passport.authenticate("jwt", { session: false }),
-  upload.array("image"),
+  upload.single("image"),
   updatePetHost
 );
 // Delete Pet Host Profile
 router.delete(
   "/",
   passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
   deletePetHost
 );
 // Average Review
@@ -56,6 +58,14 @@ router.get("/averageReviews", averageReview);
 
 // List Pet Hosts
 router.get("/", listPetHost);
+
+// Add host location image
+router.post(
+  "/addLocationImage",
+  passport.authenticate("jwt", { session: false }),
+  upload.array("image"),
+  addLocationImage
+);
 
 // *** Hiearchy ***/
 
