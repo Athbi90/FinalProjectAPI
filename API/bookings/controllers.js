@@ -68,7 +68,6 @@ exports.updateBooking = async (req, res, next) => {
     const booking = await Booking.findOne({
       where: { petId: pet.id },
     });
-    console.log("MY BOOKING", booking);
     const updatedBooking = await booking.update(req.body);
     res.json(updatedBooking);
   } catch (err) {
