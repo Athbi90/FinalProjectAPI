@@ -58,15 +58,14 @@ exports.deletePetHost = async (req, res, next) => {
 // Average Rating
 exports.averageReview = async (req, res, next) => {
   try {
-    const host = await PetHost.findByPk(req.body.petHostId);
+    const host = await PetHost.findByPk(req.query.petHostId);
 
     const where = { where: { hostId: host.id } };
     const total = await Review.sum(`rating`, where);
     const count = await Review.count(where);
 
     const average = Math.round(total / count);
-
-    res.json({ average });
+    res.json(average);
   } catch (err) {
     next(err.message);
   }
