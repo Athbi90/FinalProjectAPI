@@ -33,6 +33,7 @@ exports.createReview = async (req, res, next) => {
       reviewerId: reviewer.id,
       hostId: hostReview.id,
     });
+    console.log(newReview);
     res.status(201).json(newReview);
   } catch (err) {
     next(err);
