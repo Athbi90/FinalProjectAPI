@@ -33,8 +33,8 @@ exports.updatePetHost = async (req, res, next) => {
         userId: req.user.id,
       },
     });
-    await host.update(req.body);
-    res.status(204).end();
+    const updatedProfile = await host.update(req.body);
+    res.status(204).json(updatedProfile);
   } catch (err) {
     next(err);
   }
