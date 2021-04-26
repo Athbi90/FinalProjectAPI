@@ -20,7 +20,7 @@ exports.addPet = async (req, res, next) => {
       },
     });
     const newPet = await Pet.create({ ...req.body, petOwnerId: owner.id });
-    res.status(201).json({ message: "new Pet has been added" });
+    res.status(201).json(newPet);
   } catch (err) {
     next(err);
   }
@@ -41,8 +41,8 @@ exports.updatePet = async (req, res, next) => {
         petOwnerId: owner.id,
       },
     });
-    await pet.update(req.body);
-    res.status(204).end();
+    const updatedPet = await pet.update(req.body);
+    res.status(204).json(updatedPet);
   } catch (err) {
     next(err);
   }
