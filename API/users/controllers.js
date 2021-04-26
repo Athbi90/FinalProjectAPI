@@ -125,20 +125,13 @@ exports.userList = async (req, res, next) => {
 
 // Update user
 exports.userUpdate = async (req, res, next) => {
-  const { password } = req.body;
-  const saltRounds = 10;
   try {
-    if (password) {
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
-      console.log("exports.update -> hashedPassword", hashedPassword);
-      req.body.password = hashedPassword;
-    }
     if (req.file) {
       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
     }
-
+    // سمعتو؟؟؟؟؟؟
     await req.user.update(req.body);
-    res.status(204).json("User infomation has been updated").end();
+    res.json(req.user);
   } catch (err) {
     next(err);
   }

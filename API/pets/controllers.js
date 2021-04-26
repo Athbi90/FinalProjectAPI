@@ -20,7 +20,7 @@ exports.addPet = async (req, res, next) => {
       },
     });
     const newPet = await Pet.create({ ...req.body, petOwnerId: owner.id });
-    res.status(201).json({ message: "new Pet has been added" });
+    res.status(201).json(newPet);
   } catch (err) {
     next(err);
   }
