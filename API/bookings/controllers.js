@@ -66,8 +66,8 @@ exports.updateBooking = async (req, res, next) => {
     const booking = await Booking.findOne({
       where: { petId: pet.id },
     });
-    await booking.update(req.body);
-    res.status(204).end();
+    const updatedBooking = await booking.update(req.body);
+    res.status(204).json(updatedBooking);
   } catch (err) {
     next(err);
   }

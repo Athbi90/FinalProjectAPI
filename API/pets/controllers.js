@@ -41,8 +41,8 @@ exports.updatePet = async (req, res, next) => {
         petOwnerId: owner.id,
       },
     });
-    await pet.update(req.body);
-    res.status(204).end();
+    const updatedPet = await pet.update(req.body);
+    res.status(204).json(updatedPet);
   } catch (err) {
     next(err);
   }

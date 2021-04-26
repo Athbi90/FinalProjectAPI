@@ -129,9 +129,9 @@ exports.userUpdate = async (req, res, next) => {
     if (req.file) {
       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
     }
-    // سمعتو؟؟؟؟؟؟
     await req.user.update(req.body);
     res.json(req.user);
+
   } catch (err) {
     next(err);
   }

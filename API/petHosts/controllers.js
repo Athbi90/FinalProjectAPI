@@ -33,8 +33,8 @@ exports.updatePetHost = async (req, res, next) => {
         userId: req.user.id,
       },
     });
-    await host.update(req.body);
-    res.status(204).end();
+    const updatedProfile = await host.update(req.body);
+    res.status(204).json(updatedProfile);
   } catch (err) {
     next(err);
   }
@@ -85,20 +85,28 @@ exports.listPetHost = async (req, res, next) => {
 };
 
 // Create host location images
+// Overview: there are two levels of async here:
+// Top level for the function and for the forEach
+// One the first level we assign an empty array which will be looped in the second level of async
+// More expositation will be added later.
 exports.addLocationImage = async (req, res, next) => {
   try {
     if (req.files) {
-      console.log(req.files[filename]);
-      req.body.image = `http://${req.get("host")}/media/${req.files.filename}`;
+      let images = [];
+      const host = await PetHost.findOne({
+        where: {
+          userId: req.user.id,
+        },
+      });
+      req.files.forEach(async (file, i) => {
+        images[i] = `http://${req.get("host")}/media/${file.filename}`;
+        const hostimage = await HostImage.create({
+          image: images[i],
+          hostId: host.id,
+        });
+      });
+      res.status(201).json({ images });
     }
-    const host = await PetHost.findOne({
-      where: {
-        userId: req.user.id,
-      },
-    });
-    const hostimage = await HostImage.create({ ...req.body, hostId: host.id });
-    console.log(hostimage);
-    res.status(201).json({ message: "Host location images have been added" });
   } catch (err) {
     next(err);
   }
