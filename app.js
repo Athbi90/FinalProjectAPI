@@ -5,7 +5,7 @@ const path = require("path");
 const passport = require("passport");
 const ip = require("ip");
 require("dotenv").config();
-
+const morgan = require("morgan");
 // Socket.io stuff
 // const httpServer = require("http").createServer(app);
 // const io = require("socket.io")(httpServer, options);
@@ -25,6 +25,7 @@ const { localStrategy, jwtStrategy } = require("./middleware/passport");
 const db = require("./db/models");
 
 // Middleware
+app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 app.use("/media", express.static(path.join(__dirname, "media"))); // Media
