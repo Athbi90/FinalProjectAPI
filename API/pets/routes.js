@@ -32,5 +32,6 @@ router.put("/", passport.authenticate("jwt", { session: false }), updatePet);
 router.delete("/", passport.authenticate("jwt", { session: false }), deletePet);
 // List Pet
 router.get("/", listPet);
+// Average Reviews
 
 module.exports = router;

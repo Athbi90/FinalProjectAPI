@@ -56,6 +56,7 @@ exports.updateBooking = async (req, res, next) => {
         username: req.body.ownerUser,
       },
     });
+    console.log(owner);
     const ownerProfile = await PetOwner.findByPk(owner.id);
 
     const pet = await Pet.findOne({

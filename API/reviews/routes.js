@@ -12,6 +12,7 @@ const {
   listReview,
   hostReviews,
 } = require("./controllers");
+const { averageReview } = require("../petHosts/controllers");
 
 // PetHost Controllers
 const { fetchPetHost } = require("../petHosts/controllers");
@@ -59,5 +60,7 @@ router.delete(
 router.get("/", listReview);
 // List Host Reviews
 router.get("/hostReviews", hostReviews);
+
+router.get("/averageReviews", averageReview);
 
 module.exports = router;
