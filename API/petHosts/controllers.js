@@ -34,7 +34,7 @@ exports.updatePetHost = async (req, res, next) => {
       },
     });
     const updatedProfile = await host.update(req.body);
-    res.status(204).json(updatedProfile);
+    res.json(updatedProfile);
   } catch (err) {
     next(err);
   }
