@@ -42,13 +42,16 @@ exports.createPetOwner = async (req, res, next) => {
 // Update Profile
 exports.updatePetOwner = async (req, res, next) => {
   try {
+    if (req.file) {
+      req.body.image = `http://${req.get("owner")}/media/${req.file.filename}`;
+    }
     const petOwner = await PetOwner.findOne({
       where: {
         userId: req.user.id,
       },
     });
-    const updatedPetOwner = await petOwner.update(req.body);
-    res.status(204).json(updatedPetOwner);
+    const updatedProfile = await petOwner.update(req.body);
+    res.json(updatedProfile);
   } catch (err) {
     next(err);
   }
