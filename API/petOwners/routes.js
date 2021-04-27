@@ -3,6 +3,9 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
+// importing
+const upload = require("../../middleware/multer");
+
 // Controllers
 const {
   createPetOwner,
@@ -40,6 +43,7 @@ router.post(
 router.put(
   "/",
   passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
   updatePetOwner
 );
 // Delete Pet Owner
