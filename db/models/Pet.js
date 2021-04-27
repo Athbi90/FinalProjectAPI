@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     image: {
       type: DataTypes.STRING,
-      defaultValue: "/media/petProfile.jpeg",
+      defaultValue: "/media/petProfile.png",
     },
     walkingHours: {
       type: DataTypes.STRING,

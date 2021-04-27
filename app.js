@@ -25,7 +25,7 @@ const { localStrategy, jwtStrategy } = require("./middleware/passport");
 const db = require("./db/models");
 
 // Middleware
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 app.use("/media", express.static(path.join(__dirname, "media"))); // Media
@@ -60,7 +60,7 @@ app.get("/", (req, res) => {
 // Start server
 const run = async () => {
   try {
-    await db.sequelize.sync({ force: false });
+    await db.sequelize.sync({ alter: false });
     console.log("Server connected to database successfully.");
 
     app.listen(process.env.PORT, () => {
