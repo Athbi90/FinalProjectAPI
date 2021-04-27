@@ -43,7 +43,7 @@ exports.createPetOwner = async (req, res, next) => {
 exports.updatePetOwner = async (req, res, next) => {
   try {
     if (req.file) {
-      req.body.image = `http://${req.get("owner")}/media/${req.file.filename}`;
+      req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
     }
     const petOwner = await PetOwner.findOne({
       where: {
