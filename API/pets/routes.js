@@ -3,6 +3,9 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
+// importing
+const upload = require("../../middleware/multer");
+
 // Controllers
 const {
   fetchPet,
@@ -27,7 +30,12 @@ router.param("petId", async (req, res, next, petId) => {
 // Add Pet
 router.post("/", passport.authenticate("jwt", { session: false }), addPet);
 // Update Pet
-router.put("/", passport.authenticate("jwt", { session: false }), updatePet);
+router.put(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  updatePet
+);
 // Delete Pet
 router.delete("/", passport.authenticate("jwt", { session: false }), deletePet);
 // List Pet
