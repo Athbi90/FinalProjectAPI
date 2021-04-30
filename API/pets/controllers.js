@@ -29,7 +29,6 @@ exports.addPet = async (req, res, next) => {
 // Update Pet
 exports.updatePet = async (req, res, next) => {
   try {
-    console.log(req.file);
     if (req.file) {
       req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
     }
@@ -46,7 +45,7 @@ exports.updatePet = async (req, res, next) => {
         petOwnerId: owner.id,
       },
     });
-
+    console.log(req.body);
     const updatedPet = await pet.update(req.body);
     res.json(updatedPet);
   } catch (err) {

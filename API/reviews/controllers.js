@@ -114,3 +114,34 @@ exports.hostReviews = async (req, res, next) => {
     next(err);
   }
 };
+
+// Get The top 4 hosts on reviews
+exports.topReviews = async (req, res, next) => {
+  try {
+    let topfour = [];
+    let numOfHost = 1;
+    let rating = 5;
+
+    while (await PetHost.findByPk(numOfHost + 1)) {
+      ++numOfHost;
+    }
+
+    while (rating >= 1) {
+      let counter = numOfHost;
+      while (topfour.length < 4 && counter > 0) {
+        let host = await PetHost.findByPk(counter);
+        let total = await Review.sum(`rating`, { where: { hostId: host.id } });
+        let count = await Review.count({ where: { hostId: host.id } });
+        let average = Math.round(total / count);
+        counter = counter - 1;
+        if (average === rating) {
+          topfour.push(host);
+        }
+      }
+      rating = rating - 1;
+    }
+    res.json(topfour);
+  } catch (err) {
+    next(err.message);
+  }
+};

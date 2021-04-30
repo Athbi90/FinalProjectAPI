@@ -11,6 +11,7 @@ const {
   deleteReview,
   listReview,
   hostReviews,
+  topReviews,
 } = require("./controllers");
 const { averageReview } = require("../petHosts/controllers");
 
@@ -61,6 +62,10 @@ router.get("/", listReview);
 // List Host Reviews
 router.get("/hostReviews", hostReviews);
 
+// get avg review for a specific user
 router.get("/averageReviews", averageReview);
+
+// get top 4 hosts on reviews rating
+router.get("/tophosts", topReviews);
 
 module.exports = router;
