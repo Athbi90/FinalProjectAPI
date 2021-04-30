@@ -80,17 +80,6 @@ exports.listPet = async (req, res, next) => {
   try {
     const pets = await Pet.findAll({
       attributes: { exclude: ["createdAt", "updatedAt"] },
-      // include: {
-      //   model: Room,
-      //   as: "room",
-      //   attributes: {
-      //     include: ["id", "name"],
-      //     exclude: ["createdAt", "updatedAt"],
-      //     through: {
-      //       attributes: [],
-      //     },
-      //   },
-      // },
     });
     res.json(pets);
   } catch (err) {

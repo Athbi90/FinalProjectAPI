@@ -81,17 +81,6 @@ exports.fetchUser = async (userId, next) => {
   try {
     const user = await User.findByPk(userId, {
       attributes: { exclude: ["createdAt", "updatedAt"] },
-      // include: {
-      //   model: Room,
-      //   as: "room",
-      //   attributes: {
-      //     include: ["id", "name"],
-      //     exclude: ["createdAt", "updatedAt"],
-      //     through: {
-      //       attributes: [],
-      //     },
-      //   },
-      // },
     });
     return user;
   } catch (error) {
@@ -131,7 +120,6 @@ exports.userUpdate = async (req, res, next) => {
     }
     await req.user.update(req.body);
     res.json(req.user);
-
   } catch (err) {
     next(err);
   }

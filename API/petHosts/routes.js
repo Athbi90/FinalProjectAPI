@@ -15,6 +15,7 @@ const {
   listPetHost,
   averageReview,
   addLocationImage,
+  locationImagelist,
 } = require("./controllers");
 
 // Import Routers
@@ -59,13 +60,16 @@ router.get("/averageReviews", averageReview);
 // List Pet Hosts
 router.get("/", listPetHost);
 
-// Add host location image
+// Add host Location Image
 router.post(
   "/addLocationImage",
   passport.authenticate("jwt", { session: false }),
   upload.array("image"),
   addLocationImage
 );
+
+// List Host Images
+router.get("/hostImages", locationImagelist);
 
 // *** Hiearchy ***/
 

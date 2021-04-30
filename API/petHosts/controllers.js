@@ -110,3 +110,14 @@ exports.addLocationImage = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.locationImagelist = async (req, res, next) => {
+  try {
+    const locationImages = await HostImage.findAll({
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+    });
+    res.json(locationImages);
+  } catch (err) {
+    next(err);
+  }
+};
